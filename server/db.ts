@@ -3,7 +3,10 @@ import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { hashPassword } from './auth.ts';
 
-const DATA_DIR = path.resolve(process.cwd(), 'data');
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DATA_DIR = IS_VERCEL
+  ? path.join('/tmp', 'elegance_casa_data')
+  : path.resolve(process.cwd(), 'data');
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
